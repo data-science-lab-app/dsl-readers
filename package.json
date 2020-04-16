@@ -1,0 +1,28 @@
+{
+  "name": "dsl-csv-reader",
+  "version": "0.0.1",
+  "description": "Data Science Lab's Readers",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/data-science-lab-app/dsl-readers.git"
+  },
+  "author": "Cobe Greene",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/data-science-lab-app/dsl-readers/issues"
+  },
+  "homepage": "https://github.com/data-science-lab-app/dsl-readers#readme",
+  "data_science_lab": [],
+  "dependencies": {
+    "data-science-lab-core": "^0.0.24"
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.1",
+    "typescript": "^3.6.3"
+  }
+}
