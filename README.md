@@ -1,2 +1,8 @@
-# dsl-readers
-A collection of readers to fetch datasets from the file system for data science lab. 
+# Data Science Lab's Readers
+
+A collection of fetch plugins for the purposes of reading data from a file and creating a dataset for data scientists.
+
+Plugins include
+* CSV Reader (.csv)
+* JSON Reader (.json)
+* GZIP Reader (.gzip)
