@@ -19,7 +19,7 @@
   "homepage": "https://github.com/data-science-lab-app/dsl-readers#readme",
   "data_science_lab": [],
   "dependencies": {
-    "data-science-lab-core": "^0.0.24"
+    "data-science-lab-core": "^0.0.27"
   },
   "devDependencies": {
     "@types/node": "^12.11.1",
