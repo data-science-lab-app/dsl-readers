@@ -30,7 +30,6 @@ export class CsvReader extends FetchPlugin {
         }]);
         const features: string[] = [];
         const examples: any[][] = [];
-
         const lines = `${buffer}`.split('\n');
         
         if (lines.length === 0) {
@@ -38,17 +37,31 @@ export class CsvReader extends FetchPlugin {
         }
 
         if (hasHeaders) {
-            for (const headers of lines[0].split(seperator)) {
-                features.push(headers.trim());
+            for (const header of lines[0].split(seperator)) {
+                features.push(header.trim());
+            }
+        } else {
+            const headers = lines[0].split(seperator);
+            for (let i = 0; i < headers.length; ++i) {
+                features.push(`feature ${i + 1}`)
             }
         }
 
         const start = hasHeaders ? 1 : 0;
         
+        let exampleRow = 0;
         for (let row = start; row < lines.length; ++row) {
-            examples.push([]);
-            for (const column of lines[row].split(seperator)) {
-                examples[row - 1].push(JSON.parse(column.trim()));
+            if (lines[row] !== '') {
+                examples.push([]);
+                for (const column of lines[row].split(seperator)) {
+                    const value = column.trim();
+                    try {
+                        examples[exampleRow].push(JSON.parse(value));
+                    } catch (exception) {
+                        examples[exampleRow].push(value);
+                    }
+                }
+                ++exampleRow;
             }
         } 
 
@@ -77,7 +90,7 @@ export class CsvReaderPluginOptions extends PluginOptions {
             case 1:
                 this.hasHeaders = inputs['headers'] as boolean;
 
-                if (inputs['seperator'] === undefined || inputs['seperator'] === '') {
+                if (inputs['seperator'] === '') {
                     this.seperator = ',';
                 } else {
                     this.seperator = inputs['seperator'] as string;
