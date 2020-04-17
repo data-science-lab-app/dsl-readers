@@ -4,9 +4,11 @@ export class CsvReader extends FetchPlugin {
 
     private fileService?: FileService;
     private dataset?: PluginData;
+    private options: CsvReaderPluginOptions;
 
     constructor() {
         super();
+        this.options = new CsvReaderPluginOptions(this);
     }
 
     setFileService(fileService: FileService) {
@@ -17,11 +19,11 @@ export class CsvReader extends FetchPlugin {
         if (this.dataset) {
             return this.dataset;
         }
-        throw new Error(`Csv Reader was unable to fetch dataset.`);
+        throw new Error(`Csv Reader was unable to fetch the dataset.`);
     }
 
     getOptions(): PluginOptions {
-        return new CsvReaderPluginOptions(this);
+        return this.options;
     }
 
     async browse(hasHeaders: boolean, seperator: string): Promise<void> {
@@ -30,10 +32,10 @@ export class CsvReader extends FetchPlugin {
         }]);
         const features: string[] = [];
         const examples: any[][] = [];
-        const lines = `${buffer}`.split('\n');
-        
+        const lines = `${buffer}`.split('\n').filter((value) => value !== '');
+
         if (lines.length === 0) {
-            throw new Error('Csv Reader found no data inside the file.');    
+            throw new Error('Csv Reader found no data inside the file.');
         }
 
         if (hasHeaders) {
@@ -48,22 +50,20 @@ export class CsvReader extends FetchPlugin {
         }
 
         const start = hasHeaders ? 1 : 0;
-        
+
         let exampleRow = 0;
         for (let row = start; row < lines.length; ++row) {
-            if (lines[row] !== '') {
-                examples.push([]);
-                for (const column of lines[row].split(seperator)) {
-                    const value = column.trim();
-                    try {
-                        examples[exampleRow].push(JSON.parse(value));
-                    } catch (exception) {
-                        examples[exampleRow].push(value);
-                    }
+            examples.push([]);
+            for (const column of lines[row].split(seperator)) {
+                const value = column.trim();
+                try {
+                    examples[exampleRow].push(JSON.parse(value));
+                } catch (exception) {
+                    examples[exampleRow].push(value);
                 }
-                ++exampleRow;
             }
-        } 
+            ++exampleRow;
+        }
 
         this.dataset = {
             examples,
@@ -107,7 +107,7 @@ export class CsvReaderPluginOptions extends PluginOptions {
             case 1:
                 return [
                     new CheckboxOption({ id: 'headers', label: 'Does the file (.csv) contains feature headers? Check for yes.' }),
-                    new TextOption({ id: 'seperator', label: 'Type a seperator or the default \',\' will be used.', min: 0  })   
+                    new TextOption({ id: 'seperator', label: 'Type a seperator or the default \',\' will be used.', min: 0 })
                 ]
             case 2:
                 return [

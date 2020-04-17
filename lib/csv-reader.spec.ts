@@ -10,6 +10,7 @@ describe('Data Science Lab Csv Reader', () => {
     const csvFile = path.join(__dirname, 'file.csv');
     const periodsvFile = path.join(__dirname, 'period.csv');
     const noHeaderFile = path.join(__dirname, 'noHeader.csv');
+    const emptyFile = path.join(__dirname, 'empty.csv');
 
     beforeEach(() => {
         fs.writeFileSync(csvFile,
@@ -23,6 +24,7 @@ describe('Data Science Lab Csv Reader', () => {
         fs.writeFileSync(noHeaderFile,
             `1,\tone\t\r\n\n` +
             `2,\ttwo \r\n`);
+        fs.writeFileSync(emptyFile, '');
 
         fileService = jasmine.createSpyObj('FileService', ['openFile']);
         (fileService.openFile as jasmine.Spy).and.callFake(() => {
@@ -73,8 +75,9 @@ describe('Data Science Lab Csv Reader', () => {
     });
 
     it('submit and command should open file with contents', async () => {
-        const options = reader.getOptions();
+        let options = reader.getOptions();
         options.submit({ headers: true, seperator: '' });
+        options = reader.getOptions();
         await options.executeCommand('browse');
         const data = reader.fetch();
 
@@ -89,8 +92,9 @@ describe('Data Science Lab Csv Reader', () => {
                 resolve(fs.readFileSync(periodsvFile));
             });
         });
-        const options = reader.getOptions();
+        let options = reader.getOptions();
         options.submit({ headers: true, seperator: '.' });
+        options = reader.getOptions();
         await options.executeCommand('browse');
         const data = reader.fetch();
 
@@ -113,6 +117,24 @@ describe('Data Science Lab Csv Reader', () => {
         expect(data.features).toEqual(['feature 1', 'feature 2']);
         expect(data.examples).toEqual([[1, "one"], [2, "two"]]);
         expect(options.noMore()).toBeTruthy();
+    });
+
+    it('empty file should throw for no content', async (done) => {
+        (fileService.openFile as jasmine.Spy).and.callFake(() => {
+            return new Promise<Buffer>((resolve) => {
+                resolve(fs.readFileSync(emptyFile));
+            });
+        });
+        const options = reader.getOptions();
+        options.submit({ headers: false, seperator: ',' });
+        
+        try {
+            await options.executeCommand('browse');
+            done.fail()
+        } catch (exception) {
+            expect(options.noMore()).toBeFalsy();
+            done();
+        }
     });
 
     it('open file should throw error', async (done) => {
