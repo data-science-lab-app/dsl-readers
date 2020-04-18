@@ -82,7 +82,7 @@ export class JsonReaderPluginOptions extends PluginOptions {
     }
 
     submit(_: { [id: string]: any; }): void {
-        throw new Error(`Json Reader has no submit options`);
+        throw new Error(`Json Reader has no submit options.`);
     }
 
     options(): Option[] {

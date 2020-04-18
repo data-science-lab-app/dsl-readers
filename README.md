@@ -5,4 +5,4 @@ A collection of fetch plugins for the purposes of reading data from a file and c
 Plugins include
 * CSV Reader (.csv)
 * JSON Reader (.json)
-* GZIP Reader (.gzip)
+* MNIST Reader (.gz)
