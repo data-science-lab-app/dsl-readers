@@ -1,5 +1,5 @@
 {
-  "name": "dsl-csv-reader",
+  "name": "dsl-readers",
   "version": "1.0.0",
   "description": "Data Science Lab's Readers",
   "main": "dist/index.js",
