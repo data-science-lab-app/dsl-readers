@@ -95,7 +95,7 @@ export class MnistReader extends FetchPlugin {
 }
 
 
-export class MnistReaderPluginOptions extends PluginOptions {
+class MnistReaderPluginOptions extends PluginOptions {
     state: number;
 
     constructor(public reader: MnistReader) {

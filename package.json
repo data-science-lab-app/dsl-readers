@@ -1,6 +1,6 @@
 {
   "name": "dsl-csv-reader",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Data Science Lab's Readers",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,9 +20,25 @@
     "url": "https://github.com/data-science-lab-app/dsl-readers/issues"
   },
   "homepage": "https://github.com/data-science-lab-app/dsl-readers#readme",
-  "data_science_lab": [],
+  "data_science_lab": [
+    {
+      "name": "CSV Reader",
+      "type": "Fetch",
+      "classname": "CsvReader"
+    },
+    {
+      "name": "JSON Reader",
+      "type": "Fetch",
+      "classname": "JsonReader"
+    },
+    {
+      "name": "MNIST Reader",
+      "type": "Fetch",
+      "classname": "MnistReader"
+    }
+  ],
   "dependencies": {
-    "data-science-lab-core": "^0.0.27"
+    "data-science-lab-core": "^0.0.30"
   },
   "devDependencies": {
     "@types/node": "^12.11.1",
