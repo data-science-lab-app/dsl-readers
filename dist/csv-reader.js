@@ -140,7 +140,7 @@ var CsvReaderPluginOptions = /** @class */ (function (_super) {
         switch (this.state) {
             case 1:
                 this.hasHeaders = inputs['headers'];
-                if (inputs['seperator'] === '') {
+                if (!inputs['seperator']) {
                     this.seperator = ',';
                 }
                 else {
@@ -170,18 +170,18 @@ var CsvReaderPluginOptions = /** @class */ (function (_super) {
     CsvReaderPluginOptions.prototype.noMore = function () {
         return this.state === 3;
     };
-    CsvReaderPluginOptions.prototype.executeCommand = function (cmd) {
+    CsvReaderPluginOptions.prototype.executeCommand = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!(cmd === 'browse')) return [3 /*break*/, 2];
+                        if (!(id === 'browse')) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.reader.browse(this.hasHeaders, this.seperator)];
                     case 1:
                         _a.sent();
                         this.state = 3;
                         return [3 /*break*/, 3];
-                    case 2: throw new Error("Csv Reader recieved invalid command " + cmd);
+                    case 2: throw new Error("Csv Reader recieved invalid command " + id);
                     case 3: return [2 /*return*/];
                 }
             });

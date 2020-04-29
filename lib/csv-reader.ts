@@ -90,7 +90,7 @@ export class CsvReaderPluginOptions extends PluginOptions {
             case 1:
                 this.hasHeaders = inputs['headers'] as boolean;
 
-                if (inputs['seperator'] === '') {
+                if (!inputs['seperator']) {
                     this.seperator = ',';
                 } else {
                     this.seperator = inputs['seperator'] as string;
@@ -122,12 +122,12 @@ export class CsvReaderPluginOptions extends PluginOptions {
         return this.state === 3;
     }
 
-    async executeCommand(cmd: string): Promise<void> {
-        if (cmd === 'browse') {
+    async executeCommand(id: string): Promise<void> {
+        if (id === 'browse') {
             await this.reader.browse(this.hasHeaders, this.seperator);
             this.state = 3;
         } else {
-            throw new Error(`Csv Reader recieved invalid command ${cmd}`);
+            throw new Error(`Csv Reader recieved invalid command ${id}`);
         }
     }
 

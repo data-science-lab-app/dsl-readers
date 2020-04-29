@@ -20,5 +20,5 @@ export declare class CsvReaderPluginOptions extends PluginOptions {
     }): void;
     options(): Option[];
     noMore(): boolean;
-    executeCommand(cmd: string): Promise<void>;
+    executeCommand(id: string): Promise<void>;
 }
