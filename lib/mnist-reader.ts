@@ -112,11 +112,11 @@ class MnistReaderPluginOptions extends PluginOptions {
         switch (this.state) {
             case 1:
                 return [
-                    new CommandOption({ id: 'images', label: 'Browse for images file', command: 'images' })
+                    new CommandOption({ id: 'images', label: 'Browse for images file', command: 'Browse' })
                 ]
             case 2:
                 return [
-                    new CommandOption({ id: 'labels', label: 'Browse for labels file', command: 'labels' })
+                    new CommandOption({ id: 'labels', label: 'Browse for labels file', command: 'Browse' })
                 ]
             default:
                 throw new Error(`Mnist Reader in invalid state.`);
@@ -127,15 +127,15 @@ class MnistReaderPluginOptions extends PluginOptions {
         return this.state === 3;
     }
 
-    async executeCommand(cmd: string): Promise<void> {
-        if (cmd === 'images') {
+    async executeCommand(id: string): Promise<void> {
+        if (id === 'images') {
             await this.reader.fetchImages();
             this.state = 2;
-        } else if (cmd === 'labels') {
+        } else if (id === 'labels') {
             await this.reader.fetchLabels();
             this.state = 3;
         } else {
-            throw new Error(`Mnist Reader recieved invalid command ${cmd}`);
+            throw new Error(`Mnist Reader recieved invalid command ${id}`);
         }
     }
 }
