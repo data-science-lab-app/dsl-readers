@@ -167,11 +167,11 @@ var MnistReaderPluginOptions = /** @class */ (function (_super) {
         switch (this.state) {
             case 1:
                 return [
-                    new data_science_lab_core_1.CommandOption({ id: 'images', label: 'Browse for images file', command: 'images' })
+                    new data_science_lab_core_1.CommandOption({ id: 'images', label: 'Browse for images file', command: 'Browse' })
                 ];
             case 2:
                 return [
-                    new data_science_lab_core_1.CommandOption({ id: 'labels', label: 'Browse for labels file', command: 'labels' })
+                    new data_science_lab_core_1.CommandOption({ id: 'labels', label: 'Browse for labels file', command: 'Browse' })
                 ];
             default:
                 throw new Error("Mnist Reader in invalid state.");
@@ -180,25 +180,25 @@ var MnistReaderPluginOptions = /** @class */ (function (_super) {
     MnistReaderPluginOptions.prototype.noMore = function () {
         return this.state === 3;
     };
-    MnistReaderPluginOptions.prototype.executeCommand = function (cmd) {
+    MnistReaderPluginOptions.prototype.executeCommand = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!(cmd === 'images')) return [3 /*break*/, 2];
+                        if (!(id === 'images')) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.reader.fetchImages()];
                     case 1:
                         _a.sent();
                         this.state = 2;
                         return [3 /*break*/, 5];
                     case 2:
-                        if (!(cmd === 'labels')) return [3 /*break*/, 4];
+                        if (!(id === 'labels')) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.reader.fetchLabels()];
                     case 3:
                         _a.sent();
                         this.state = 3;
                         return [3 /*break*/, 5];
-                    case 4: throw new Error("Mnist Reader recieved invalid command " + cmd);
+                    case 4: throw new Error("Mnist Reader recieved invalid command " + id);
                     case 5: return [2 /*return*/];
                 }
             });
